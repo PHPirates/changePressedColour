@@ -11,6 +11,7 @@ import java.util.concurrent.*;
 public class Controller {
     @FXML protected void buttonAction(MouseEvent event) {
         if(event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
+            //not starting up the thread lets the button change colour immediately
             startThread();
         } else { // mouse released
             startThread();

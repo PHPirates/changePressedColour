@@ -1,0 +1,7 @@
+#button {
+    -fx-background-color: red;
+}
+
+#button:pressed {
+    -fx-background-color: blue;
+}

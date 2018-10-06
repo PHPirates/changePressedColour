@@ -2,6 +2,7 @@ package sample;
 
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -12,11 +13,10 @@ import java.util.concurrent.*;
  * Controller class.
  */
 public class Controller {
-    @FXML protected void buttonAction(MouseEvent event) {
-        if (event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
-            //not starting up the thread lets the button change colour immediately
-            startThread();
-        } else { // mouse released
+    @FXML
+    protected void buttonAction(MouseEvent event) {
+        if (!event.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
+            // The following method delays the changing of color until it is finished
             startThread();
         }
     }
@@ -42,9 +42,11 @@ public class Controller {
 //            Platform.runLater(updateUITask);
 //            updateUITask.get();
 
+            // todo this seems to be blocking the UI thread (e.g. can't move window) but
+            // it shouldn't since it's a separate thread?
             executor.submit(() -> {
                 String responseBody = "";
-                System.out.println("sending request to "+url);
+                System.out.println("sending request to " + url);
                 try {
                     InputStream response = new URL(url).openStream();
                     try (Scanner scanner = new Scanner(response)) {
